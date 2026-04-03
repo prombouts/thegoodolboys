@@ -206,12 +206,12 @@
         }
 
         .hero-scroll {
-            position: absolute;
-            bottom: 2.5rem;
-            left: 50%;
-            transform: translateX(-50%);
+            position: relative;
+            margin-top: 3.2rem;
             opacity: 0;
             animation: fadeInUp 0.8s ease-out 1.4s both;
+            width: fit-content;
+            align-self: center;
         }
 
         .hero-scroll a {
@@ -343,11 +343,23 @@
 
         .member:hover::before { opacity: 1; width: 60px; }
 
-        .member-icon {
-            font-size: 2rem;
-            margin-bottom: 1rem;
+        .member-photo-wrap {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 1.1rem;
+            padding: 4px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, rgba(193,123,46,0.45), rgba(122,68,34,0.15));
+            box-shadow: 0 10px 26px rgba(44,24,16,0.12);
+        }
+
+        .member-photo {
+            width: 100%;
+            height: 100%;
             display: block;
-            opacity: 0.7;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid rgba(253,248,239,0.8);
         }
 
         .member h3 {
@@ -358,9 +370,11 @@
         }
 
         .member .role {
-            font-style: italic;
             color: var(--text-muted);
-            font-size: 0.95rem;
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-weight: 600;
         }
 
         /* ===== REPERTOIRE ===== */
@@ -386,6 +400,7 @@
         .setlist {
             max-width: 700px;
             margin: 0 auto;
+            width: 100%;
         }
 
         .setlist-item {
@@ -408,6 +423,8 @@
             font-weight: 600;
             color: var(--brown-deep);
             font-size: 1.05rem;
+            min-width: 0;
+            overflow-wrap: anywhere;
         }
 
         .song-dots {
@@ -424,6 +441,7 @@
             color: var(--text-muted);
             font-size: 0.95rem;
             white-space: nowrap;
+            min-width: 0;
         }
 
         /* ===== OPTREDENS ===== */
@@ -651,7 +669,23 @@
 
             .member { padding: 1.8rem 1.2rem; }
 
+            .member-photo-wrap {
+                width: 180px;
+                height: 180px;
+            }
+
             .setlist-item { padding: 0.75rem 0.8rem; }
+
+            .song-artist {
+                text-align: right;
+                white-space: normal;
+            }
+
+            .setlist-wrapper::before {
+                width: 100%;
+                left: 0;
+                transform: none;
+            }
 
             section { padding: 4rem 1.2rem; }
 
@@ -661,14 +695,24 @@
         @media (max-width: 480px) {
             .setlist-item {
                 flex-wrap: wrap;
-                gap: 0.1rem;
+                align-items: flex-start;
+                gap: 0.3rem;
+                padding: 0.75rem;
             }
 
             .song-dots { display: none; }
 
+            .song-title {
+                width: 100%;
+                font-size: 0.98rem;
+                line-height: 1.35;
+            }
+
             .song-artist {
                 width: 100%;
                 font-size: 0.85rem;
+                white-space: normal;
+                text-align: left;
             }
         }
     </style>
@@ -724,17 +768,23 @@
             </p>
             <div class="members stagger-children">
                 <div class="member reveal">
-                    <span class="member-icon">🎸</span>
+                    <div class="member-photo-wrap">
+                        <img src="images/mark.jpeg" alt="Mark" class="member-photo">
+                    </div>
                     <h3>Mark</h3>
-                    <p class="role">Zang &amp; Gitaar</p>
+                    <p class="role">Gitaar · Zang</p>
                 </div>
                 <div class="member reveal">
-                    <span class="member-icon">🎸</span>
+                    <div class="member-photo-wrap">
+                        <img src="images/matthieu.jpeg" alt="Matthieu" class="member-photo">
+                    </div>
                     <h3>Matthieu</h3>
-                    <p class="role">Zang &amp; Gitaar</p>
+                    <p class="role">Gitaar · Zang</p>
                 </div>
                 <div class="member reveal">
-                    <span class="member-icon">🎵</span>
+                    <div class="member-photo-wrap">
+                        <img src="images/peter.jpeg" alt="Peter" class="member-photo">
+                    </div>
                     <h3>Peter</h3>
                     <p class="role">Bas</p>
                 </div>
@@ -923,6 +973,24 @@
                 navLinks.classList.remove('open');
                 toggle.classList.remove('active');
                 toggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        // Smooth scroll with fixed-header offset for all in-page nav links
+        document.querySelectorAll('a[href^="#"]').forEach(link => {
+            link.addEventListener('click', (event) => {
+                const targetId = link.getAttribute('href');
+                const targetEl = document.querySelector(targetId);
+                if (!targetEl) return;
+
+                event.preventDefault();
+
+                const navHeight = document.querySelector('nav').offsetHeight;
+                const targetTop = targetEl.getBoundingClientRect().top + window.pageYOffset;
+                const scrollTop = Math.max(targetTop - navHeight - 8, 0);
+
+                window.scrollTo({ top: scrollTop, behavior: 'smooth' });
+                history.replaceState(null, '', targetId);
             });
         });
 
