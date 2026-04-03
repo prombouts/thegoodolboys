@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Good Ol' Boys — Acoustic Music Covers</title>
+    <meta name="description" content="The Good Ol' Boys — Akoestische covers van americana, country en blues uit 's-Hertogenbosch.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rye&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Stint+Ultra+Expanded&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <style>
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #fdf8ef;
+            --bg-alt: #f5ead0;
+            --bg-card: #faf3e6;
+            --brown-deep: #2c1810;
+            --brown: #5c3218;
+            --brown-mid: #7a4422;
+            --amber: #b06c1f;
+            --gold: #c17b2e;
+            --gold-dark: #9a5e16;
+            --text: #2c1810;
+            --text-soft: #4a2e1a;
+            --text-muted: #7a5a40;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Crimson Pro', Georgia, serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            font-size: 18px;
+            overflow-x: hidden;
+        }
+
+        /* ===== NOISE TEXTURE OVERLAY ===== */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* ===== NAVIGATION ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: linear-gradient(180deg, rgba(253,248,239,0.97) 0%, rgba(253,248,239,0.9) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(44,24,16,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        nav .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.6rem 2rem;
+        }
+
+        nav .nav-logo img {
+            height: 40px;
+            width: auto;
+            opacity: 0.9;
+            transition: opacity 0.3s;
+        }
+
+        nav .nav-logo img:hover { opacity: 1; }
+
+        nav .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        nav .nav-links a {
+            color: var(--brown-deep);
+            text-decoration: none;
+            font-size: 0.85rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-weight: 600;
+            opacity: 0.6;
+            transition: opacity 0.3s, color 0.3s;
+            position: relative;
+        }
+
+        nav .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--amber);
+            transition: width 0.3s ease;
+        }
+
+        nav .nav-links a:hover { opacity: 1; color: var(--amber); }
+        nav .nav-links a:hover::after { width: 100%; }
+
+        /* Mobile hamburger */
+        .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; }
+        .nav-toggle span {
+            display: block; width: 24px; height: 2px; background: var(--brown-deep);
+            margin: 5px 0; transition: all 0.3s;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding: 2rem;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 50% 40%, rgba(193,123,46,0.06) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 80% at 20% 80%, rgba(245,234,208,0.5) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 80% at 80% 80%, rgba(245,234,208,0.5) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        /* Decorative line art */
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--amber), transparent);
+        }
+
+        .hero-logo-wrap {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+
+        .hero-logo-wrap::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 130%;
+            height: 150%;
+            background: radial-gradient(ellipse at center, #ffffff 0%, #ffffff 25%, var(--bg) 70%);
+            border-radius: 50%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .hero-logo {
+            width: min(600px, 85vw);
+            height: auto;
+            animation: fadeInScale 1.2s ease-out both;
+            filter: drop-shadow(0 20px 60px rgba(44,24,16,0.08));
+        }
+
+        .hero-tagline {
+            font-family: 'Crimson Pro', serif;
+            font-style: italic;
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            color: var(--amber);
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+            letter-spacing: 0.05em;
+        }
+
+        .hero-sub {
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+            color: var(--text-soft);
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 0.9s both;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 1.4s both;
+        }
+
+        .hero-scroll a {
+            color: var(--amber);
+            text-decoration: none;
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+
+        .hero-scroll a:hover { opacity: 1; }
+
+        .hero-scroll .arrow {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(180deg, var(--amber), transparent);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* ===== SECTIONS ===== */
+        section {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 6rem 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Rye', cursive;
+            font-size: clamp(2rem, 5vw, 3rem);
+            color: var(--brown-deep);
+            letter-spacing: 0.04em;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::before,
+        .section-header h2::after {
+            content: '✦';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.4em;
+            color: var(--amber);
+            opacity: 0.6;
+        }
+
+        .section-header h2::before { left: -1.5em; }
+        .section-header h2::after { right: -1.5em; }
+
+        .section-header p {
+            margin-top: 1rem;
+            color: var(--text-muted);
+            font-style: italic;
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        .divider {
+            width: 60px;
+            height: 1px;
+            background: var(--amber);
+            margin: 1.5rem auto 0;
+            opacity: 0.4;
+        }
+
+        /* ===== OVER ONS ===== */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            text-align: center;
+        }
+
+        .about-text {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: var(--text-soft);
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        .members {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .member {
+            background: var(--bg-card);
+            border: 1px solid rgba(44,24,16,0.08);
+            border-radius: 2px;
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.4s, transform 0.3s, box-shadow 0.4s;
+        }
+
+        .member::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 2px;
+            background: var(--amber);
+            opacity: 0;
+            transition: opacity 0.4s, width 0.4s;
+        }
+
+        .member:hover {
+            border-color: rgba(176,108,31,0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(44,24,16,0.06);
+        }
+
+        .member:hover::before { opacity: 1; width: 60px; }
+
+        .member-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+            opacity: 0.7;
+        }
+
+        .member h3 {
+            font-family: 'Rye', cursive;
+            font-size: 1.3rem;
+            color: var(--brown-deep);
+            margin-bottom: 0.3rem;
+        }
+
+        .member .role {
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* ===== REPERTOIRE ===== */
+        .setlist-wrapper {
+            position: relative;
+        }
+
+        .setlist-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 700px;
+            height: calc(100% + 40px);
+            background: var(--bg-card);
+            border: 1px solid rgba(44,24,16,0.06);
+            border-radius: 2px;
+            z-index: -1;
+        }
+
+        .setlist {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .setlist-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 0.85rem 1.5rem;
+            border-bottom: 1px solid rgba(44,24,16,0.06);
+            transition: background 0.3s, padding-left 0.3s;
+        }
+
+        .setlist-item:hover {
+            background: rgba(193,123,46,0.06);
+            padding-left: 2rem;
+        }
+
+        .setlist-item:last-child { border-bottom: none; }
+
+        .song-title {
+            font-weight: 600;
+            color: var(--brown-deep);
+            font-size: 1.05rem;
+        }
+
+        .song-dots {
+            flex: 1;
+            margin: 0 1rem;
+            border-bottom: 1px dotted rgba(44,24,16,0.15);
+            min-width: 2rem;
+            align-self: center;
+            margin-bottom: 4px;
+        }
+
+        .song-artist {
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            white-space: nowrap;
+        }
+
+        /* ===== OPTREDENS ===== */
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(400px, 100%), 1fr));
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .event-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(44,24,16,0.08);
+            border-radius: 2px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.4s, transform 0.4s, box-shadow 0.4s;
+        }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--amber), var(--brown));
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .event-card:hover {
+            border-color: rgba(176,108,31,0.25);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(44,24,16,0.06);
+        }
+
+        .event-card:hover::before { opacity: 1; }
+
+        .event-date {
+            font-family: 'Stint Ultra Expanded', serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--amber);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .event-date::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--amber);
+            border-radius: 50%;
+            display: inline-block;
+            opacity: 0.7;
+        }
+
+        .event-name {
+            font-family: 'Rye', cursive;
+            font-size: 1.3rem;
+            color: var(--brown-deep);
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .event-details {
+            color: var(--text-soft);
+            font-size: 0.95rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .event-time {
+            color: var(--text-muted);
+            font-style: italic;
+            font-size: 0.95rem;
+        }
+
+        .event-link {
+            display: inline-block;
+            margin-top: 1.2rem;
+            color: var(--amber);
+            text-decoration: none;
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(193,123,46,0.3);
+            padding-bottom: 2px;
+            transition: border-color 0.3s, color 0.3s;
+        }
+
+        .event-link:hover {
+            color: var(--gold-dark);
+            border-color: var(--gold-dark);
+        }
+
+        /* ===== CONTACT / FOOTER ===== */
+        footer {
+            border-top: 1px solid rgba(44,24,16,0.08);
+            text-align: center;
+            padding: 4rem 2rem 3rem;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--amber), transparent);
+        }
+
+        .footer-logo {
+            width: 180px;
+            height: auto;
+            opacity: 0.5;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-tagline {
+            font-style: italic;
+            color: var(--text-muted);
+            opacity: 0.7;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-contact {
+            margin-bottom: 2rem;
+        }
+
+        .footer-contact a {
+            color: var(--amber);
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            border-bottom: 1px solid rgba(193,123,46,0.3);
+            padding-bottom: 2px;
+            transition: color 0.3s, border-color 0.3s;
+        }
+
+        .footer-contact a:hover {
+            color: var(--gold-dark);
+            border-color: var(--gold-dark);
+        }
+
+        .footer-copy {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            opacity: 0.5;
+            letter-spacing: 0.05em;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.92); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        /* Scroll-triggered fade in */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Stagger children */
+        .stagger-children .reveal:nth-child(1) { transition-delay: 0s; }
+        .stagger-children .reveal:nth-child(2) { transition-delay: 0.1s; }
+        .stagger-children .reveal:nth-child(3) { transition-delay: 0.2s; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            nav .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background: var(--bg);
+                flex-direction: column;
+                padding: 5rem 2rem 2rem;
+                gap: 1.5rem;
+                transition: right 0.4s ease;
+                border-left: 1px solid rgba(193,123,46,0.12);
+            }
+
+            nav .nav-links.open { right: 0; }
+
+            .nav-toggle { display: block; z-index: 1001; }
+
+            .nav-toggle.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            .nav-toggle.active span:nth-child(2) { opacity: 0; }
+            .nav-toggle.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -5px);
+            }
+
+            .members { grid-template-columns: 1fr; gap: 1.2rem; }
+
+            .member { padding: 1.8rem 1.2rem; }
+
+            .setlist-item { padding: 0.75rem 0.8rem; }
+
+            section { padding: 4rem 1.2rem; }
+
+            .event-card { padding: 1.8rem; }
+        }
+
+        @media (max-width: 480px) {
+            .setlist-item {
+                flex-wrap: wrap;
+                gap: 0.1rem;
+            }
+
+            .song-dots { display: none; }
+
+            .song-artist {
+                width: 100%;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <div class="nav-inner">
+            <a href="#" class="nav-logo">
+                <img src="images/GoodOlBoys_TextOnly.png" alt="The Good Ol' Boys">
+            </a>
+            <button class="nav-toggle" aria-label="Menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="#over-ons">Over Ons</a></li>
+                <li><a href="#repertoire">Repertoire</a></li>
+                <li><a href="#optredens">Optredens</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+        <div class="hero-logo-wrap">
+        <img src="images/GoodOlBoys_Logo.png" alt="The Good Ol' Boys — Acoustic Music Covers" class="hero-logo">
+        </div>
+        <p class="hero-tagline">Americana, Country &amp; Blues uit 's-Hertogenbosch</p>
+        <p class="hero-sub">Akoestische covers met ziel</p>
+        <div class="hero-scroll">
+            <a href="#over-ons">
+                Ontdek meer
+                <span class="arrow"></span>
+            </a>
+        </div>
+    </section>
+
+    <!-- OVER ONS -->
+    <section id="over-ons">
+        <div class="section-header reveal">
+            <h2>Over Ons</h2>
+            <div class="divider"></div>
+        </div>
+        <div class="about-content">
+            <p class="about-text reveal">
+                The Good Ol' Boys brengen de warmte van americana, country en blues naar
+                cafés en festivals in en rond 's-Hertogenbosch. Met twee akoestische gitaren
+                en een bas strippen we de grote klassiekers tot hun essentie — eerlijk,
+                ontspannen en vol gevoel. Van Johnny Cash tot Bruce Springsteen, van Bob Dylan
+                tot De Dijk: muziek die iedereen kent en waar iedereen bij kan zingen.
+            </p>
+            <div class="members stagger-children">
+                <div class="member reveal">
+                    <span class="member-icon">🎸</span>
+                    <h3>Mark</h3>
+                    <p class="role">Zang &amp; Gitaar</p>
+                </div>
+                <div class="member reveal">
+                    <span class="member-icon">🎸</span>
+                    <h3>Matthieu</h3>
+                    <p class="role">Zang &amp; Gitaar</p>
+                </div>
+                <div class="member reveal">
+                    <span class="member-icon">🎵</span>
+                    <h3>Peter</h3>
+                    <p class="role">Bas</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- REPERTOIRE -->
+    <section id="repertoire">
+        <div class="section-header reveal">
+            <h2>Repertoire</h2>
+            <p>Een greep uit onze setlist</p>
+            <div class="divider"></div>
+        </div>
+        <div class="setlist-wrapper reveal">
+            <div class="setlist">
+                <div class="setlist-item">
+                    <span class="song-title">Living on a Prayer</span>
+                    <span class="song-dots"></span>
+                    <span class="song-artist">Bon Jovi</span>
+                </div>
+                <div class="setlist-item">
+                    <span class="song-title">Margaritaville</span>
+                    <span class="song-dots"></span>
+                    <span class="song-artist">Jimmy Buffett</span>
+                </div>
+                <div class="setlist-item">
+                    <span class="song-title">Folsom Prison Blues</span>
+                    <span class="song-dots"></span>
+                    <span class="song-artist">Johnny Cash</span>
+                </div>
+                <div class="setlist-item">
+                    <span class="song-title">Toes</span>
+                    <span class="song-dots"></span>
+                    <span class="song-artist">Zac Brown Band</span>
+                </div>
+                <div class="setlist-item">
+                    <span class="song-title">Dancing in the Dark</span>
+                    <span class="song-dots"></span>
+                    <span class="song-artist">Bruce Springsteen</span>
+                </div>
+                <div class="setlist-item">
+                    <span class="song-title">Sweet Child o' Mine</span>
+                    <span class="song-dots"></span>
+                    <span class="song-artist">Guns N' Roses</span>
+                </div>
+                <div class="setlist-item">
+                    <span class="song-title">Back in the USSR</span>
+                    <span class="song-dots"></span>
+                    <span class="song-artist">The Beatles</span>
+                </div>
+                <div class="setlist-item">
+                    <span class="song-title">Sittin' on the Dock of the Bay</span>
+                    <span class="song-dots"></span>
+                    <span class="song-artist">Otis Redding</span>
+                </div>
+                <div class="setlist-item">
+                    <span class="song-title">Good Ol' Boys</span>
+                    <span class="song-dots"></span>
+                    <span class="song-artist">Waylon Jennings</span>
+                </div>
+                <div class="setlist-item">
+                    <span class="song-title">Take It Easy</span>
+                    <span class="song-dots"></span>
+                    <span class="song-artist">The Eagles</span>
+                </div>
+                <div class="setlist-item">
+                    <span class="song-title">On the Road Again</span>
+                    <span class="song-dots"></span>
+                    <span class="song-artist">Willie Nelson</span>
+                </div>
+                <div class="setlist-item">
+                    <span class="song-title">Bad, Bad Leroy Brown</span>
+                    <span class="song-dots"></span>
+                    <span class="song-artist">Jim Croce</span>
+                </div>
+                <div class="setlist-item">
+                    <span class="song-title">Blowin' in the Wind</span>
+                    <span class="song-dots"></span>
+                    <span class="song-artist">Bob Dylan</span>
+                </div>
+                <div class="setlist-item">
+                    <span class="song-title">Summer of '69</span>
+                    <span class="song-dots"></span>
+                    <span class="song-artist">Bryan Adams</span>
+                </div>
+                <div class="setlist-item">
+                    <span class="song-title">Lookin' Out My Back Door</span>
+                    <span class="song-dots"></span>
+                    <span class="song-artist">Creedence Clearwater Revival</span>
+                </div>
+                <div class="setlist-item">
+                    <span class="song-title">Crazy Little Thing Called Love</span>
+                    <span class="song-dots"></span>
+                    <span class="song-artist">Queen</span>
+                </div>
+                <div class="setlist-item">
+                    <span class="song-title">Take Me Home, Country Roads</span>
+                    <span class="song-dots"></span>
+                    <span class="song-artist">John Denver</span>
+                </div>
+                <div class="setlist-item">
+                    <span class="song-title">Bad Moon Rising</span>
+                    <span class="song-dots"></span>
+                    <span class="song-artist">Creedence Clearwater Revival</span>
+                </div>
+                <div class="setlist-item">
+                    <span class="song-title">The Man Who Sold the World</span>
+                    <span class="song-dots"></span>
+                    <span class="song-artist">David Bowie</span>
+                </div>
+                <div class="setlist-item">
+                    <span class="song-title">Sweet Caroline</span>
+                    <span class="song-dots"></span>
+                    <span class="song-artist">Neil Diamond</span>
+                </div>
+                <div class="setlist-item">
+                    <span class="song-title">Wagon Wheel</span>
+                    <span class="song-dots"></span>
+                    <span class="song-artist">Old Crow Medicine Show</span>
+                </div>
+                <div class="setlist-item">
+                    <span class="song-title">Who'll Stop the Rain</span>
+                    <span class="song-dots"></span>
+                    <span class="song-artist">Creedence Clearwater Revival</span>
+                </div>
+                <div class="setlist-item">
+                    <span class="song-title">Als Ze Er Niet Is</span>
+                    <span class="song-dots"></span>
+                    <span class="song-artist">De Dijk</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- OPTREDENS -->
+    <section id="optredens">
+        <div class="section-header reveal">
+            <h2>Optredens</h2>
+            <p>Waar je ons kunt zien</p>
+            <div class="divider"></div>
+        </div>
+        <div class="events-grid stagger-children">
+            <div class="event-card reveal">
+                <div class="event-date">10 mei 2026 — Zondag</div>
+                <h3 class="event-name">Nederlands Speciaalbier Festival</h3>
+                <p class="event-details">Parade, 's-Hertogenbosch</p>
+                <p class="event-time">12:00 – 19:00 uur</p>
+                <a href="https://www.speciaalbierfestival.nl/" target="_blank" rel="noopener noreferrer" class="event-link">Meer info →</a>
+            </div>
+            <div class="event-card reveal">
+                <div class="event-date">7 juni 2026 — Zondag</div>
+                <h3 class="event-name">Café Het Veulen</h3>
+                <p class="event-details">Parade, 's-Hertogenbosch</p>
+                <p class="event-time">16:00 – 19:00 uur</p>
+                <a href="https://hetveulen.nl/" target="_blank" rel="noopener noreferrer" class="event-link">Meer info →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER / CONTACT -->
+    <footer id="contact">
+        <img src="images/GoodOlBoys_TextOnly.png" alt="The Good Ol' Boys" class="footer-logo">
+        <p class="footer-tagline">Americana, Country &amp; Blues — Akoestisch uit Den Bosch</p>
+        <div class="footer-contact">
+            <a href="https://forms.gle/xTBguxVJcGarYDTR7" target="_blank" rel="noopener noreferrer">Neem contact op</a>
+        </div>
+        <p class="footer-copy">&copy; 2026 The Good Ol' Boys. Alle rechten voorbehouden.</p>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Mobile nav toggle
+        const toggle = document.querySelector('.nav-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        toggle.addEventListener('click', () => {
+            const isOpen = navLinks.classList.toggle('open');
+            toggle.classList.toggle('active');
+            toggle.setAttribute('aria-expanded', isOpen);
+        });
+
+        // Close nav on link click
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+                toggle.classList.remove('active');
+                toggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        // Scroll reveal
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.15,
+            rootMargin: '0px 0px -40px 0px'
+        });
+
+        revealElements.forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
