@@ -1136,13 +1136,19 @@
             const fallbackEl = countdownRoot.querySelector('[data-countdown-fallback]');
             const daysEl = countdownRoot.querySelector('[data-countdown-days]');
 
+            const getCalendarDayDiff = (target, now = new Date()) => {
+                const todayUtc = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+                const targetUtc = Date.UTC(target.getFullYear(), target.getMonth(), target.getDate());
+                return Math.floor((targetUtc - todayUtc) / 86400000);
+            };
+
             const upcomingEvent = eventCards
                 .map(card => ({
                     name: card.dataset.eventName,
                     label: card.dataset.eventDateLabel,
                     target: new Date(card.dataset.eventTarget)
                 }))
-                .filter(event => !Number.isNaN(event.target.getTime()) && event.target.getTime() > Date.now())
+                .filter(event => !Number.isNaN(event.target.getTime()) && getCalendarDayDiff(event.target) >= 0)
                 .sort((a, b) => a.target - b.target)[0];
 
             const updateEventCardsCountdown = () => {
@@ -1159,14 +1165,20 @@
                         return;
                     }
 
-                    const diffMs = target.getTime() - now;
-                    if (diffMs <= 0) {
-                        countdownEl.textContent = name + ' IS BEGONNEN';
+                    const daysLeft = getCalendarDayDiff(target, new Date(now));
+
+                    if (daysLeft < 0) {
+                        countdownEl.textContent = name + ' IS GEWEEST';
                         return;
                     }
 
-                    const daysLeft = Math.floor(diffMs / 86400000);
-                    countdownEl.textContent = 'NOG ' + String(daysLeft) + ' DAGEN TOT ' + name;
+                    if (daysLeft === 0) {
+                        countdownEl.textContent = name + ' IS VANDAAG';
+                        return;
+                    }
+
+                    const dayLabel = daysLeft === 1 ? 'DAG' : 'DAGEN';
+                    countdownEl.textContent = 'NOG ' + String(daysLeft) + ' ' + dayLabel + ' TOT ' + name;
                 });
             };
 
@@ -1179,18 +1191,22 @@
             } else {
                 countdownEvent.textContent = upcomingEvent.name;
                 countdownDate.textContent = upcomingEvent.label;
+                const unitLabel = countdownRoot.querySelector('.countdown-unit-label');
 
                 const tick = () => {
-                    const remainingMs = upcomingEvent.target.getTime() - Date.now();
+                    const days = getCalendarDayDiff(upcomingEvent.target);
 
-                    if (remainingMs <= 0) {
-                        daysEl.textContent = '00';
-                        return;
+                    if (days <= 0) {
+                        daysEl.textContent = 'Vandaag';
+                        if (unitLabel) {
+                            unitLabel.textContent = '';
+                        }
+                    } else {
+                        daysEl.textContent = String(days).padStart(2, '0');
+                        if (unitLabel) {
+                            unitLabel.textContent = days === 1 ? 'Dag' : 'Dagen';
+                        }
                     }
-
-                    const days = Math.floor(remainingMs / 86400000);
-
-                    daysEl.textContent = String(days).padStart(2, '0');
 
                     updateEventCardsCountdown();
                 };
