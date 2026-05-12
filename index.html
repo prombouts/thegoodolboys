@@ -161,6 +161,7 @@
             position: relative;
             display: inline-block;
             margin-bottom: 2rem;
+            margin-top: 2rem;
         }
 
         .hero-logo-wrap::before {
@@ -628,6 +629,311 @@
             border-color: var(--gold-dark);
         }
 
+        /* ===== FOTO'S ===== */
+        .gallery-section {
+            max-width: 1200px;
+            position: relative;
+        }
+
+        .gallery-section::before {
+            content: '';
+            position: absolute;
+            inset: 2rem 1rem 0;
+            background:
+                linear-gradient(180deg, rgba(193,123,46,0.06), rgba(193,123,46,0)),
+                radial-gradient(circle at top left, rgba(176,108,31,0.08), transparent 45%);
+            border: 1px solid rgba(44,24,16,0.06);
+            z-index: -1;
+        }
+
+        .gallery-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.45fr);
+            gap: 1.8rem;
+            align-items: start;
+        }
+
+        .gallery-intro {
+            background: linear-gradient(180deg, rgba(250,243,230,0.96), rgba(245,234,208,0.88));
+            border: 1px solid rgba(44,24,16,0.08);
+            padding: 2rem;
+            box-shadow: 0 14px 40px rgba(44,24,16,0.05);
+        }
+
+        .gallery-kicker {
+            font-family: 'Stint Ultra Expanded', serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--amber);
+            margin-bottom: 1rem;
+        }
+
+        .gallery-intro p {
+            color: var(--text-soft);
+            font-size: 1.08rem;
+            line-height: 1.8;
+        }
+
+        .gallery-note {
+            margin-top: 1.25rem;
+            font-style: italic;
+            color: var(--text-muted);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(12, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        .gallery-card {
+            display: block;
+            position: relative;
+            overflow: hidden;
+            min-height: 240px;
+            background: var(--bg-card);
+            border: 1px solid rgba(44,24,16,0.08);
+            box-shadow: 0 14px 34px rgba(44,24,16,0.08);
+            transition: transform 0.45s ease, box-shadow 0.45s ease, border-color 0.45s ease;
+        }
+
+        .gallery-card:nth-child(1) {
+            grid-column: span 7;
+            min-height: 360px;
+        }
+
+        .gallery-card:nth-child(2) {
+            grid-column: span 5;
+            min-height: 280px;
+            margin-top: 2rem;
+        }
+
+        .gallery-card:nth-child(3) {
+            grid-column: span 5;
+            min-height: 260px;
+            margin-top: -3.5rem;
+        }
+
+        .gallery-card:nth-child(4) {
+            grid-column: span 7;
+            min-height: 340px;
+        }
+
+        .gallery-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(44,24,16,0) 35%, rgba(44,24,16,0.52) 100%);
+            opacity: 0.85;
+            transition: opacity 0.35s ease;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-6px) rotate(-0.3deg);
+            box-shadow: 0 20px 44px rgba(44,24,16,0.14);
+            border-color: rgba(176,108,31,0.24);
+        }
+
+        .gallery-card:hover::after {
+            opacity: 1;
+        }
+
+        .gallery-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.55s ease;
+        }
+
+        .gallery-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-caption {
+            position: absolute;
+            left: 1rem;
+            right: 1rem;
+            bottom: 1rem;
+            z-index: 1;
+            color: #fff9f0;
+        }
+
+        .gallery-caption strong {
+            display: block;
+            font-family: 'Rye', cursive;
+            font-size: 1.15rem;
+            margin-bottom: 0.25rem;
+            letter-spacing: 0.03em;
+        }
+
+        .gallery-caption span {
+            font-size: 0.82rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            opacity: 0.92;
+        }
+
+        /* ===== LIGHTBOX ===== */
+        .lightbox-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.92);
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(4px);
+        }
+
+        .lightbox-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .lightbox-image-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-width: 90vw;
+            max-height: 80vh;
+            position: relative;
+        }
+
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 2px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #fff;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s, border-color 0.3s;
+            z-index: 2001;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            border-radius: 2px;
+            font-size: 1.25rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s, border-color 0.3s;
+            z-index: 2001;
+        }
+
+        .lightbox-nav:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .lightbox-prev {
+            left: 1.5rem;
+        }
+
+        .lightbox-next {
+            right: 1.5rem;
+        }
+
+        .lightbox-counter {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .lightbox-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
+            .lightbox-prev {
+                left: 0.75rem;
+            }
+
+            .lightbox-next {
+                right: 0.75rem;
+            }
+
+            .lightbox-close {
+                width: 40px;
+                height: 40px;
+                font-size: 1.25rem;
+                top: 1rem;
+                right: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .lightbox-container {
+                padding: 1rem;
+            }
+
+            .lightbox-image-wrapper {
+                max-width: 100vw;
+                max-height: 70vh;
+            }
+
+            .lightbox-nav {
+                width: 36px;
+                height: 36px;
+                font-size: 0.9rem;
+            }
+
+            .lightbox-prev {
+                left: 0.5rem;
+            }
+
+            .lightbox-next {
+                right: 0.5rem;
+            }
+        }
+
         /* ===== CONTACT / FOOTER ===== */
         footer {
             border-top: 1px solid rgba(44,24,16,0.08);
@@ -775,6 +1081,32 @@
 
             .event-card { padding: 1.8rem; }
 
+            .gallery-section::before {
+                inset: 1.2rem 0 0;
+            }
+
+            .gallery-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-intro {
+                padding: 1.5rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .gallery-card,
+            .gallery-card:nth-child(1),
+            .gallery-card:nth-child(2),
+            .gallery-card:nth-child(3),
+            .gallery-card:nth-child(4) {
+                grid-column: span 1;
+                min-height: 250px;
+                margin-top: 0;
+            }
+
             .countdown-card {
                 padding: 1.3rem 1rem;
             }
@@ -785,6 +1117,22 @@
         }
 
         @media (max-width: 480px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-card,
+            .gallery-card:nth-child(1),
+            .gallery-card:nth-child(2),
+            .gallery-card:nth-child(3),
+            .gallery-card:nth-child(4) {
+                min-height: 220px;
+            }
+
+            .gallery-caption strong {
+                font-size: 1rem;
+            }
+
             .setlist-item {
                 flex-wrap: wrap;
                 align-items: flex-start;
@@ -831,6 +1179,7 @@
                 <li><a href="#over-ons">Over Ons</a></li>
                 <li><a href="#repertoire">Repertoire</a></li>
                 <li><a href="#optredens">Optredens</a></li>
+                <li><a href="#fotos">Foto's</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </div>
@@ -1060,6 +1409,70 @@
         </div>
     </section>
 
+    <!-- FOTO'S -->
+    <section id="fotos" class="gallery-section">
+        <div class="section-header reveal">
+            <h2>Foto's</h2>
+            <p>Sfeerbeelden van onze optredens</p>
+            <div class="divider"></div>
+        </div>
+        <div class="gallery-layout">
+            <div class="gallery-intro reveal">
+                <p class="gallery-kicker">Live op locatie</p>
+                <p>
+                    Een kleine blik op de sfeer rond onze sets: buitenpodia, speciaalbier,
+                    publiek dicht op de muziek en een middag waarop americana, country en
+                    blues precies op hun plek vallen.
+                </p>
+            </div>
+            <div class="gallery-grid stagger-children">
+                <button class="gallery-card reveal" data-gallery-image="gallery/optredenbierfestival2025_1.jpeg" aria-label="Open foto van optreden op het bierfestival in volledige grootte">
+                    <img src="gallery/optredenbierfestival2025_1.jpeg" alt="The Good Ol' Boys spelen live op het speciaalbierfestival" loading="lazy">
+                    <div class="gallery-caption">
+                        <strong>Festivalmiddag</strong>
+                        <span>Parade · Den Bosch</span>
+                    </div>
+                </button>
+                <button class="gallery-card reveal" data-gallery-image="gallery/optredenbierfestival2025_2.jpeg" aria-label="Open close-up foto van het optreden in volledige grootte">
+                    <img src="gallery/optredenbierfestival2025_2.jpeg" alt="Close-up van The Good Ol' Boys tijdens een live optreden" loading="lazy">
+                    <div class="gallery-caption">
+                        <strong>Dicht op de set</strong>
+                        <span>Akoestisch · Live</span>
+                    </div>
+                </button>
+                <button class="gallery-card reveal" data-gallery-image="gallery/optredenbierfestival2025_3.jpeg" aria-label="Open publieksfoto van het optreden in volledige grootte">
+                    <img src="gallery/optredenbierfestival2025_3.jpeg" alt="Publiek en podium tijdens een optreden van The Good Ol' Boys" loading="lazy">
+                    <div class="gallery-caption">
+                        <strong>Publiek erbij</strong>
+                        <span>Country &amp; Blues</span>
+                    </div>
+                </button>
+                <button class="gallery-card reveal" data-gallery-image="gallery/optredenbierfestival2025_4.jpeg" aria-label="Open sfeerfoto van het optreden in volledige grootte">
+                    <img src="gallery/optredenbierfestival2025_4.jpeg" alt="Sfeerbeeld van The Good Ol' Boys op een buitenpodium" loading="lazy">
+                    <div class="gallery-caption">
+                        <strong>Openlucht sfeer</strong>
+                        <span>Americana · Buitenpodium</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- LIGHTBOX OVERLAY -->
+    <div class="lightbox-overlay" id="lightbox-overlay">
+        <button class="lightbox-close" id="lightbox-close" aria-label="Close gallery">×</button>
+        <button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Previous image">‹</button>
+        <div class="lightbox-container">
+            <div class="lightbox-image-wrapper">
+                <img class="lightbox-image" id="lightbox-image" src="" alt="">
+            </div>
+            <div class="lightbox-counter">
+                <span id="lightbox-index">1</span> / <span id="lightbox-total">4</span>
+            </div>
+        </div>
+        <button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Next image">›</button>
+    </div>
+
     <!-- FOOTER / CONTACT -->
     <footer id="contact">
         <img src="images/GoodOlBoys_TextOnly.png" alt="The Good Ol' Boys" class="footer-logo">
@@ -1125,6 +1538,82 @@
         });
 
         revealElements.forEach(el => observer.observe(el));
+
+        // Lightbox functionality
+        const lightboxOverlay = document.getElementById('lightbox-overlay');
+        const lightboxImage = document.getElementById('lightbox-image');
+        const lightboxClose = document.getElementById('lightbox-close');
+        const lightboxPrev = document.getElementById('lightbox-prev');
+        const lightboxNext = document.getElementById('lightbox-next');
+        const lightboxIndex = document.getElementById('lightbox-index');
+        const galleryCards = document.querySelectorAll('.gallery-card[data-gallery-image]');
+        const galleryImages = Array.from(galleryCards).map(card => card.dataset.galleryImage);
+        let currentImageIndex = 0;
+
+        const openLightbox = (index) => {
+            currentImageIndex = index;
+            lightboxImage.src = galleryImages[currentImageIndex];
+            lightboxImage.alt = galleryCards[currentImageIndex].querySelector('img').alt;
+            lightboxIndex.textContent = currentImageIndex + 1;
+            lightboxOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        };
+
+        const closeLightbox = () => {
+            lightboxOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        };
+
+        const showNext = () => {
+            currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+            openLightbox(currentImageIndex);
+        };
+
+        const showPrev = () => {
+            currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+            openLightbox(currentImageIndex);
+        };
+
+        // Gallery card click handlers
+        galleryCards.forEach((card, index) => {
+            card.addEventListener('click', () => openLightbox(index));
+        });
+
+        // Lightbox controls
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightboxPrev.addEventListener('click', showPrev);
+        lightboxNext.addEventListener('click', showNext);
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (!lightboxOverlay.classList.contains('active')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowRight') showNext();
+            if (e.key === 'ArrowLeft') showPrev();
+        });
+
+        // Touch swipe support for mobile
+        let touchStartX = 0;
+        lightboxOverlay.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+        });
+
+        lightboxOverlay.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) showNext();
+                else showPrev();
+            }
+        });
+
+        // Close on overlay click (not on image)
+        lightboxOverlay.addEventListener('click', (e) => {
+            if (e.target === lightboxOverlay) closeLightbox();
+        });
+
+        // Set total image count
+        document.getElementById('lightbox-total').textContent = galleryImages.length;
 
         // Countdown to the nearest upcoming event
         const countdownRoot = document.getElementById('optredens-countdown');
