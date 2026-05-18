@@ -37,6 +37,55 @@ if (toggle && navLinks) {
             });
         });
 
+        const galleryGrid = document.getElementById('gallery-grid');
+        const galleryItems = [
+            {
+                src: 'gallery/optredenbierfestival2025_1.jpeg',
+                alt: "The Good Ol' Boys spelen live op het speciaalbierfestival",
+                title: 'Festivalmiddag',
+                subtitle: 'Parade · Den Bosch'
+            },
+            {
+                src: 'gallery/optredenbierfestival2025_2.jpeg',
+                alt: "Close-up van The Good Ol' Boys tijdens een live optreden",
+                title: 'Dicht op de set',
+                subtitle: 'Akoestisch · Live'
+            },
+            {
+                src: 'gallery/optredenbierfestival2025_3.jpeg',
+                alt: "Publiek en podium tijdens een optreden van The Good Ol' Boys",
+                title: 'Publiek erbij',
+                subtitle: 'Country & Blues'
+            },
+            {
+                src: 'gallery/optredenbierfestival2025_4.jpeg',
+                alt: "Sfeerbeeld van The Good Ol' Boys op een buitenpodium",
+                title: 'Openlucht sfeer',
+                subtitle: 'Americana · Buitenpodium'
+            },
+            ...Array.from({ length: 11 }, (_, index) => {
+                const number = index + 1;
+                return {
+                    src: `gallery/speciaalbier_belle_${number}.jpeg`,
+                    alt: `The Good Ol' Boys tijdens Speciaalbierfestival Den Bosch, foto ${number}`,
+                    title: `@stories_by_belle`,
+                    subtitle: 'Speciaalbier · Live'
+                };
+            })
+        ];
+
+        if (galleryGrid) {
+            galleryGrid.innerHTML = galleryItems.map((item) => `
+                <button type="button" class="gallery-card reveal" data-gallery-image="${item.src}" aria-label="Open ${item.title} in volledige grootte">
+                    <img src="${item.src}" alt="${item.alt}" loading="lazy" decoding="async" width="2016" height="1134">
+                    <div class="gallery-caption">
+                        <strong>${item.title}</strong>
+                        <span>${item.subtitle}</span>
+                    </div>
+                </button>
+            `).join('');
+        }
+
         // Scroll reveal
         const revealElements = document.querySelectorAll('.reveal');
 
