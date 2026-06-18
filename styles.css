@@ -820,6 +820,29 @@
             opacity: 0.92;
         }
 
+        /* ===== PROMOVIDEO ===== */
+        .promo-video-section {
+            max-width: 1200px;
+            position: relative;
+        }
+
+        .promo-video-wrap {
+            max-width: 960px;
+            margin: 0 auto;
+            background: linear-gradient(180deg, rgba(250,243,230,0.94), rgba(245,234,208,0.86));
+            border: 1px solid rgba(44,24,16,0.1);
+            padding: 1rem;
+            box-shadow: 0 14px 36px rgba(44,24,16,0.08);
+        }
+
+        .promo-video-player {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            display: block;
+            background: #000;
+            border: 1px solid rgba(44,24,16,0.18);
+        }
+
         /* ===== LIGHTBOX ===== */
         .lightbox-overlay {
             display: none;
@@ -1150,6 +1173,10 @@
                 padding: 1.5rem;
             }
 
+            .promo-video-wrap {
+                padding: 0.7rem;
+            }
+
             .gallery-grid {
                 grid-template-columns: 1fr;
             }
@@ -1219,6 +1246,10 @@
                 align-items: flex-start;
                 gap: 0.3rem;
                 padding: 0.75rem;
+            }
+
+            .promo-video-wrap {
+                padding: 0.5rem;
             }
 
             .song-dots { display: none; }
