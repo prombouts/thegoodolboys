@@ -23,7 +23,9 @@ if (toggle && navLinks) {
         document.querySelectorAll('a[href^="#"]').forEach(link => {
             link.addEventListener('click', (event) => {
                 const targetId = link.getAttribute('href');
-                const targetEl = document.querySelector(targetId);
+                const targetEl = targetId && targetId !== '#'
+                    ? document.getElementById(targetId.slice(1))
+                    : document.getElementById('home');
                 if (!targetEl) return;
 
                 event.preventDefault();
@@ -240,6 +242,11 @@ if (toggle && navLinks) {
             if (!upcomingEvent) {
                 countdownGrid.hidden = true;
                 countdownDate.hidden = true;
+                daysEl.textContent = '';
+                const unitLabel = countdownRoot.querySelector('.countdown-unit-label');
+                if (unitLabel) {
+                    unitLabel.textContent = '';
+                }
                 fallbackEl.hidden = false;
             } else {
                 countdownEvent.textContent = upcomingEvent.name;

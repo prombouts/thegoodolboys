@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-21T00:00:00Z",
+  "title": "Design System: The Good Ol' Boys",
+  "extensions": {
+    "colorMeta": {
+      "parchment": { "role": "neutral", "displayName": "Parchment", "canonical": "#fdf8ef", "tonalRamp": ["#fffdf9", "#fdf8ef", "#f5ead0"] },
+      "parchment-deep": { "role": "neutral", "displayName": "Parchment Deep", "canonical": "#f5ead0", "tonalRamp": ["#faf3e6", "#f5ead0", "#ead8b5"] },
+      "card-cream": { "role": "neutral", "displayName": "Card Cream", "canonical": "#faf3e6", "tonalRamp": ["#fffaf1", "#faf3e6", "#f5ead0"] },
+      "brown-deep": { "role": "primary", "displayName": "Deep Brown", "canonical": "#2c1810", "tonalRamp": ["#5c3218", "#2c1810", "#180c08"] },
+      "brown": { "role": "secondary", "displayName": "Brown", "canonical": "#5c3218", "tonalRamp": ["#7a4422", "#5c3218", "#2c1810"] },
+      "brown-mid": { "role": "secondary", "displayName": "Terracotta Brown", "canonical": "#7a4422", "tonalRamp": ["#9a5e16", "#7a4422", "#5c3218"] },
+      "amber": { "role": "primary", "displayName": "Burnished Amber", "canonical": "#b06c1f", "tonalRamp": ["#c17b2e", "#b06c1f", "#9a5e16"] },
+      "gold": { "role": "primary", "displayName": "Sunlit Gold", "canonical": "#c17b2e", "tonalRamp": ["#d39a51", "#c17b2e", "#b06c1f"] },
+      "gold-dark": { "role": "primary", "displayName": "Gold Dark", "canonical": "#9a5e16", "tonalRamp": ["#b06c1f", "#9a5e16", "#7a4422"] },
+      "text-soft": { "role": "neutral", "displayName": "Soft Text Brown", "canonical": "#4a2e1a", "tonalRamp": ["#7a5a40", "#4a2e1a", "#2c1810"] },
+      "text-muted": { "role": "neutral", "displayName": "Muted Text Brown", "canonical": "#7a5a40", "tonalRamp": ["#9d836b", "#7a5a40", "#4a2e1a"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Rye", "purpose": "Section headings, names, event titles, and image captions." },
+      "body": { "displayName": "Crimson Pro", "purpose": "Readable paragraphs, taglines, and supporting copy." },
+      "label": { "displayName": "Stint Ultra Expanded", "purpose": "Uppercase navigation, dates, roles, metadata, and countdown labels." }
+    },
+    "shadows": [
+      { "name": "card-rest", "value": "0 14px 34px rgba(44,24,16,0.08)", "purpose": "Ambient depth for image and media cards." },
+      { "name": "card-hover", "value": "0 20px 44px rgba(44,24,16,0.14)", "purpose": "Raised state for gallery hover." },
+      { "name": "lightbox-image", "value": "0 25px 60px rgba(0,0,0,0.4)", "purpose": "Separation of enlarged photographs from the dark overlay." }
+    ],
+    "motion": [
+      { "name": "ease-standard", "value": "ease", "purpose": "Default state transitions and scroll reveals." },
+      { "name": "fade-up", "value": "0.8s ease", "purpose": "Intersection-observer reveal for below-the-fold content." },
+      { "name": "hero-entry", "value": "1.2s ease-out", "purpose": "Hero logo fade and scale on page entry." },
+      { "name": "reduced-motion", "value": "prefers-reduced-motion: reduce", "purpose": "Disables animation, transition, and smooth scrolling when requested." }
+    ],
+    "breakpoints": [
+      { "name": "mobile", "value": "768px" },
+      { "name": "small-mobile", "value": "480px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Social Navigation Link",
+      "kind": "nav",
+      "refersTo": "nav-social",
+      "description": "Amber Instagram link presented as the sole navigation pill.",
+      "html": "<a class=\"nav-social-link\" href=\"#\"><span>Instagram</span></a>",
+      "css": ".nav-social-link { display: inline-flex; align-items: center; gap: .45rem; padding: .42rem .85rem; border: 1px solid rgba(176,108,31,.18); border-radius: 999px; color: #b06c1f; background: rgba(176,108,31,.06); } .nav-social-link:hover { color: #2c1810; background: rgba(176,108,31,.14); }"
+    },
+    {
+      "name": "Event Card",
+      "kind": "card",
+      "refersTo": "event-card",
+      "description": "Warm paper event surface for venue, time, countdown, and details link.",
+      "html": "<article class=\"event-card\"><div class=\"event-date\">14 augustus 2026</div><h3 class=\"event-name\">Venue</h3><a class=\"event-link\" href=\"#\">Meer info</a></article>",
+      "css": ".event-card { background: #faf3e6; border: 1px solid rgba(44,24,16,.08); border-radius: 2px; padding: 2.5rem; transition: border-color .4s, transform .4s, box-shadow .4s; } .event-card:hover { border-color: rgba(176,108,31,.25); transform: translateY(-4px); box-shadow: 0 8px 30px rgba(44,24,16,.06); }"
+    },
+    {
+      "name": "Gallery Card",
+      "kind": "custom",
+      "refersTo": "gallery-card",
+      "description": "Photographic live-performance tile with brown caption overlay and lightbox behavior.",
+      "html": "<button class=\"gallery-card\" type=\"button\"><img src=\"gallery/example.jpeg\" alt=\"Live optreden\"><div class=\"gallery-caption\"><strong>Festivalmiddag</strong><span>Parade - Den Bosch</span></div></button>",
+      "css": ".gallery-card { position: relative; overflow: hidden; background: #faf3e6; border: 1px solid rgba(44,24,16,.08); border-radius: 2px; box-shadow: 0 14px 34px rgba(44,24,16,.08); } .gallery-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 35%, rgba(44,24,16,.52)); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Roadhouse Songbook",
+    "overview": "The current interface is a sun-warmed, print-inspired music identity built from parchment surfaces, dark brown ink, amber highlights, and real live photography. Rye, Crimson Pro, and Stint Ultra Expanded create a hand-lettered Americana voice with an editorial reading layer and compact show-card metadata.",
+    "keyCharacteristics": ["Parchment and cream tonal layering", "Amber used as a scarce interaction signal", "Nearly square paper-like cards", "Soft brown-tinted shadows", "Real people, venues, photographs, and video lead"],
+    "rules": [
+      { "name": "The Amber Signal Rule", "body": "Use amber for orientation, interaction, dates, and small emphasis rather than filling every surface.", "section": "colors" },
+      { "name": "The Three-Voice Rule", "body": "Use Rye for identity and names, Crimson Pro for reading, and Stint Ultra Expanded for compact metadata.", "section": "typography" },
+      { "name": "The Paper-First Rule", "body": "Use parchment layers and borders before adding a shadow; depth should feel ambient and tactile.", "section": "elevation" }
+    ],
+    "dos": ["Do preserve the parchment, deep brown, and amber relationship.", "Do use real band photography and factual event information.", "Do honor the 768px and 480px responsive behavior."],
+    "donts": ["Don't replace the identity with a generic white, neon, or dark-mode system without explicit redesign intent.", "Don't turn every action into a rounded pill.", "Don't fabricate event details, testimonials, clients, metrics, or booking claims."]
+  }
+}
