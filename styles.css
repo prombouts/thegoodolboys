@@ -16,8 +16,6 @@
             --text-muted: #7a5a40;
         }
 
-        html { scroll-behavior: smooth; }
-
         body {
             font-family: 'Crimson Pro', Georgia, serif;
             background: var(--bg);

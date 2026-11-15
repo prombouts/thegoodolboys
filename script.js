@@ -19,6 +19,71 @@ if (toggle && navLinks) {
     });
 }
 
+        let cancelNavigationScroll = () => {};
+
+        // Keep the destination aligned if content above it changes size while loading.
+        const scrollToSection = (targetEl) => {
+            cancelNavigationScroll();
+
+            const nav = document.querySelector('nav');
+            const startTop = window.pageYOffset;
+            const duration = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 800;
+            let startTime;
+            let frame;
+            let finished = false;
+            let observer;
+            let timeout;
+
+            const destination = () => Math.max(
+                targetEl.getBoundingClientRect().top + window.pageYOffset - nav.offsetHeight - 8,
+                0
+            );
+            const stop = () => {
+                cancelAnimationFrame(frame);
+                clearTimeout(timeout);
+                if (observer) observer.disconnect();
+                ['wheel', 'touchstart', 'pointerdown', 'keydown'].forEach(type =>
+                    window.removeEventListener(type, stop)
+                );
+            };
+            cancelNavigationScroll = stop;
+
+            ['wheel', 'touchstart', 'pointerdown', 'keydown'].forEach(type =>
+                window.addEventListener(type, stop, { passive: true })
+            );
+
+            if ('ResizeObserver' in window) {
+                let lastDestination = destination();
+                observer = new ResizeObserver(() => {
+                    const nextDestination = destination();
+                    if (finished && Math.abs(nextDestination - lastDestination) > 1) {
+                        window.scrollTo(0, nextDestination);
+                    }
+                    lastDestination = nextDestination;
+                });
+                observer.observe(nav);
+                document.querySelectorAll('section, footer').forEach(section => {
+                    if (section.compareDocumentPosition(targetEl) & Node.DOCUMENT_POSITION_FOLLOWING) {
+                        observer.observe(section);
+                    }
+                });
+            }
+
+            const animate = (time) => {
+                if (startTime === undefined) startTime = time;
+                const progress = duration ? Math.min((time - startTime) / duration, 1) : 1;
+                const eased = 1 - Math.pow(1 - progress, 3);
+                window.scrollTo(0, startTop + (destination() - startTop) * eased);
+                if (progress < 1) {
+                    frame = requestAnimationFrame(animate);
+                } else {
+                    finished = true;
+                }
+            };
+            frame = requestAnimationFrame(animate);
+            timeout = setTimeout(stop, 2500);
+        };
+
         // Smooth scroll with fixed-header offset for all in-page nav links
         document.querySelectorAll('a[href^="#"]').forEach(link => {
             link.addEventListener('click', (event) => {
@@ -30,11 +95,7 @@ if (toggle && navLinks) {
 
                 event.preventDefault();
 
-                const navHeight = document.querySelector('nav').offsetHeight;
-                const targetTop = targetEl.getBoundingClientRect().top + window.pageYOffset;
-                const scrollTop = Math.max(targetTop - navHeight - 8, 0);
-
-                window.scrollTo({ top: scrollTop, behavior: 'smooth' });
+                scrollToSection(targetEl);
                 history.replaceState(null, '', targetId);
             });
         });
